@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Dead Aire at Bottle Hill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=DM+Mono:wght@400;500&family=Permanent+Marker&display=swap">
+<style>
+/* Layout: a darkroom contact sheet. Frames sit on black film stock with
+   edge-print numbers; picks are marked like grease pencil on the proof. */
+:root{
+  --stock:#0d0c0b;        /* film base / page */
+  --rebate:#191715;       /* frame border strip */
+  --edge:#e0913a;         /* orange edge-print numbers */
+  --paper:#ece6da;        /* text, like a proof print highlight */
+  --muted:#8f877b;
+  --line:#2c2925;
+  --post:#e5483a;         /* red grease pencil */
+  --maybe:#e8c341;        /* yellow grease pencil */
+  --pass:#6d675e;
+  --display:"Permanent Marker","Marker Felt","Comic Sans MS",cursive;
+  --ui:"Archivo Narrow","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--stock);color:var(--paper);font-family:var(--ui);font-size:16px;line-height:1.45;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:32px 72px;display:grid;gap:28px}
+
+/* header */
+header{display:grid;gap:14px}
+.slug{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--edge)}
+h1{font-family:var(--ui);font-weight:700;font-size:clamp(34px,6vw,60px);line-height:1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-family:var(--display);font-style:normal;font-weight:400;color:var(--post);font-size:.62em;display:inline-block;transform:rotate(-4deg) translateY(-.2em);margin-left:.25em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.lede strong{color:var(--paper);font-weight:600}
+
+/* status + tally bar */
+.bar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;border-block:1px solid var(--line);padding-block:12px}
+.me{display:flex;gap:10px;align-items:center;min-width:0;font-size:14px;color:var(--muted)}
+.me img{width:26px;height:26px;border-radius:50%}
+.me b{color:var(--paper);font-weight:600}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--muted);font:600 13px var(--ui);letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--paper);color:var(--stock)}
+.btn{background:none;border:1px solid var(--line);border-radius:4px;color:var(--paper);font:600 13px var(--ui);letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+button:focus-visible{outline:2px solid var(--edge);outline-offset:2px}
+.note{font-size:14px;color:var(--maybe);margin:0}
+
+/* the sheet */
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:22px}
+.frame{background:var(--rebate);padding:10px 10px 12px;display:grid;gap:10px;position:relative;min-width:0}
+.frame::before,.frame::after{content:"";position:absolute;left:10px;right:10px;height:5px;
+  background:repeating-linear-gradient(90deg,var(--stock) 0 9px,transparent 9px 18px);opacity:.9}
+.frame::before{top:2px}.frame::after{bottom:2px}
+.edge{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:12px;color:var(--edge);letter-spacing:.08em;padding-top:4px}
+.edge .kind{color:var(--muted)}
+.shot{position:relative;display:block;width:100%;aspect-ratio:3/2;max-width:100%;padding:0;border:0;background:#000;cursor:zoom-in;overflow:visible}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+/* grease-pencil mark drawn over the proof */
+.mark{position:absolute;pointer-events:none;inset:-6px;border:3px solid transparent;border-radius:22px 30px 18px 26px;transform:rotate(-1.5deg)}
+.frame[data-pick="post"] .mark{border-color:var(--post)}
+.frame[data-pick="maybe"] .mark{border-color:var(--maybe);border-style:dashed}
+.frame[data-pick="pass"] .shot img{filter:brightness(.45) saturate(.5)}
+.frame[data-pick="pass"] .mark{border:0;inset:0;background:
+  linear-gradient(to top right,transparent calc(50% - 2px),var(--pass) calc(50% - 2px) calc(50% + 2px),transparent calc(50% + 2px))}
+.scrawl{position:absolute;right:10px;bottom:6px;font-family:var(--display);font-size:22px;transform:rotate(-6deg);text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.frame[data-pick="post"] .scrawl{color:var(--post)}
+.frame[data-pick="maybe"] .scrawl{color:var(--maybe)}
+.frame[data-pick="pass"] .scrawl{color:var(--paper)}
+
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.picks{display:inline-flex;gap:6px}
+.pick{border:1px solid var(--line);background:none;color:var(--paper);border-radius:3px;font:600 13px var(--ui);letter-spacing:.05em;text-transform:uppercase;padding:7px 11px;cursor:pointer;min-width:58px}
+.pick[aria-pressed="true"][data-v="post"]{background:var(--post);border-color:var(--post);color:#fff}
+.pick[aria-pressed="true"][data-v="maybe"]{background:var(--maybe);border-color:var(--maybe);color:#1a1405}
+.pick[aria-pressed="true"][data-v="pass"]{background:var(--pass);border-color:var(--pass);color:#fff}
+.pick:disabled{opacity:.45;cursor:not-allowed}
+.small{display:inline-flex;gap:6px}
+.small button{background:none;border:0;color:var(--muted);font:500 12px var(--mono);letter-spacing:.06em;cursor:pointer;padding:6px 4px;text-transform:uppercase}
+.small button:hover{color:var(--paper)}
+.small button[aria-pressed="true"]{color:var(--edge)}
+
+.votes{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted);min-height:20px}
+.votes span{display:inline-flex;align-items:center;gap:5px}
+.votes i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.votes .post i{background:var(--post)}.votes .maybe i{background:var(--maybe)}.votes .pass i{background:var(--pass)}
+
+footer{color:var(--muted);font-size:13px;font-family:var(--mono);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:14px}
+
+/* loupe */
+.loupe{position:fixed;inset:0;background:rgba(5,5,4,.96);display:grid;grid-template-rows:1fr auto;z-index:20;
+  padding:calc(env(safe-area-inset-top,0px) + 16px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.loupe img{max-width:100%;max-height:100%;object-fit:contain;margin:auto;display:block;min-height:0}
+.loupe .stage{display:grid;place-items:center;min-height:0;overflow:hidden}
+.loupe .ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding-top:12px}
+.loupe .num{font-family:var(--mono);color:var(--edge);font-size:13px;letter-spacing:.08em;min-width:110px;text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--paper);color:var(--stock);padding:8px 14px;border-radius:4px;font-weight:600;font-size:14px;z-index:30}
+@media (prefers-reduced-motion:no-preference){.frame{transition:transform .15s}.mark{transition:border-color .15s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="slug">Proof sheet · Sat Oct 3 2026 · Canon 7D Mk II</div>
+    <h1>Dead Aire at Bottle Hill <em>proofs</em></h1>
+    <p class="lede">Nine frames from Saturday's set, seven with a black-and-white version. Mark each one <strong>Post</strong>, <strong>Maybe</strong> or <strong>Pass</strong>. Tap a photo to see it full size, and tap <strong>B&amp;W</strong> on a frame to compare. Your picks save in this browser, so you can come back and change them.</p>
+  </header>
+
+  <div class="bar">
+    <div class="me" id="me">Loading…</div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Show">
+        <button id="f-all" data-f="all" aria-pressed="true">All</button>
+        <button id="f-post" data-f="post" aria-pressed="false">My posts</button>
+        <button id="f-open" data-f="open" aria-pressed="false">Not marked</button>
+      </div>
+      <button class="btn" id="copy">Copy my picks</button>
+    </div>
+  </div>
+  <p class="note" id="note" hidden></p>
+
+  <section class="sheet" id="sheet" aria-label="Contact sheet"></section>
+
+  <footer>Photos © Chris Flynn · Not for posting until the band signs off</footer>
+</div>
+
+<div class="loupe" id="loupe" hidden role="dialog" aria-modal="true" aria-label="Full size photo">
+  <div class="stage"><img id="loupe-img" alt=""></div>
+  <div class="ctl">
+    <button class="btn" id="prev" aria-label="Previous frame">← Prev</button>
+    <span class="num" id="loupe-num"></span>
+    <button class="btn" id="next" aria-label="Next frame">Next →</button>
+    <button class="btn" id="loupe-bw">B&amp;W</button>
+    <button class="btn" id="close">Close</button>
+  </div>
+</div>
+
+<script>
+const FRAMES=[
+  {n:"7909",bw:true},{n:"7914",bw:false},{n:"7924",bw:true},
+  {n:"7927",bw:true},{n:"7959",bw:true},{n:"7974",bw:true},
+  {n:"7979",bw:false},{n:"8026",bw:true},{n:"8030",bw:true}
+];
+const LABEL={post:"Post",maybe:"Maybe",pass:"Pass"};
+const LS="deadaire-bottlehill-picks";
+
+let mine={};            // frame -> pick, this viewer
+let others={};          // uid -> picks
+let myId=null, db=null, user=null, canWrite=true;
+let showBW={};          // frame -> bool
+let filter="all";
+let loupeIdx=-1;
+
+try{mine=JSON.parse(localStorage.getItem(LS)||"{}")||{}}catch(e){mine={}}
+const saveLocal=()=>{try{localStorage.setItem(LS,JSON.stringify(mine))}catch(e){}};
+
+const $=s=>document.querySelector(s);
+const src=(f,size)=>`img/${size}/${showBW[f.n]&&f.bw?"bw":""}${f.n}.jpg`;
+
+function build(){
+  const sheet=$("#sheet");
+  sheet.innerHTML="";
+  FRAMES.forEach((f,i)=>{
+    const el=document.createElement("article");
+    el.className="frame";el.id="frame-"+f.n;
+    el.innerHTML=`
+      <div class="edge"><span>▸ ${f.n}</span><span class="kind">${f.bw?"color · b&amp;w":"color only"}</span></div>
+      <button class="shot" aria-label="Open frame ${f.n} full size"><img loading="lazy" alt="Dead Aire at Bottle Hill, frame ${f.n}"><span class="mark"></span><span class="scrawl"></span></button>
+      <div class="row">
+        <div class="picks" role="group" aria-label="Your pick for frame ${f.n}">
+          ${["post","maybe","pass"].map(v=>`<button class="pick" id="p-${f.n}-${v}" data-v="${v}" aria-pressed="false">${LABEL[v]}</button>`).join("")}
+        </div>
+        <div class="small">
+          ${f.bw?`<button class="bwt" id="bw-${f.n}" aria-pressed="false">B&amp;W</button>`:""}
+          <button class="cmt" id="c-${f.n}" hidden>Comment</button>
+        </div>
+      </div>
+      <div class="votes" aria-live="polite"></div>`;
+    el.querySelector(".shot").onclick=()=>openLoupe(i);
+    el.querySelectorAll(".pick").forEach(b=>b.onclick=()=>setPick(f.n,b.dataset.v));
+    const bw=el.querySelector(".bwt");
+    if(bw) bw.onclick=()=>{showBW[f.n]=!showBW[f.n];paint()};
+    el.querySelector(".cmt").onclick=()=>comment(el);
+    sheet.appendChild(el);
+  });
+}
+
+async function paint(){
+  const ids=Object.keys(others).filter(id=>id!==myId);
+  const ps=(user&&ids.length)?await user.profiles(ids):{};
+  FRAMES.forEach(f=>{
+    const el=$("#frame-"+f.n);
+    const p=mine[f.n]||"";
+    el.dataset.pick=p;
+    const img=el.querySelector(".shot img");
+    const want=src(f,"thumb");
+    if(img.getAttribute("src")!==want) img.setAttribute("src",want);
+    el.querySelector(".scrawl").textContent=p?LABEL[p]:"";
+    el.querySelectorAll(".pick").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.v===p));b.disabled=!canWrite&&!!db});
+    const bw=el.querySelector(".bwt");
+    if(bw) bw.setAttribute("aria-pressed",String(!!showBW[f.n]));
+    // band votes
+    const groups={post:[],maybe:[],pass:[]};
+    if(p) groups[p].push("You");
+    ids.forEach(id=>{const v=others[id]?.[f.n];if(groups[v])groups[v].push(ps[id]?.name||"Bandmate")});
+    const box=el.querySelector(".votes");box.innerHTML="";
+    let any=false;
+    for(const k of ["post","maybe","pass"]){
+      if(!groups[k].length)continue;any=true;
+      const s=document.createElement("span");s.className=k;
+      const dot=document.createElement("i");s.appendChild(dot);
+      s.appendChild(document.createTextNode(`${LABEL[k]}: ${groups[k].join(", ")}`));
+      box.appendChild(s);
+    }
+    if(!any){const s=document.createElement("span");s.textContent="No picks yet";box.appendChild(s)}
+    // filter
+    const bandPost=groups.post.length>0;
+    el.hidden=(filter==="post"&&!bandPost)||(filter==="open"&&!!p);
+  });
+  if(loupeIdx>=0) paintLoupe();
+}
+
+/* writes: one at a time, coalesced */
+let writing=false,dirty=false;
+async function flush(){
+  if(!db||!myId||!canWrite)return;
+  if(writing){dirty=true;return}
+  writing=true;
+  try{await db.doc("votes/"+myId).set({picks:{...mine},updatedAt:new Date().toISOString()})}
+  catch(e){
+    if(e&&e.code==="invalid_argument"){canWrite=false;showNote("You can look but not vote with this link. Use Copy my picks and text them to Chris.");paint()}
+    else if(e&&e.code==="unavailable"){setTimeout(()=>{dirty=true;writing=false;flush()},800+Math.random()*800);return}
+  }
+  writing=false;
+  if(dirty){dirty=false;flush()}
+}
+let t=null;
+function setPick(n,v){
+  if(mine[n]===v) delete mine[n]; else mine[n]=v;
+  saveLocal();paint();
+  clearTimeout(t);t=setTimeout(flush,400);
+}
+
+function showNote(msg){const n=$("#note");n.textContent=msg;n.hidden=false}
+function toast(msg){const d=document.createElement("div");d.className="toast";d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}
+
+$("#copy").onclick=async()=>{
+  const by={post:[],maybe:[],pass:[]};
+  FRAMES.forEach(f=>{const p=mine[f.n];if(p)by[p].push(f.n+(showBW[f.n]?" (B&W)":""))});
+  const txt="Dead Aire / Bottle Hill picks\n"+["post","maybe","pass"].map(k=>`${LABEL[k]}: ${by[k].join(", ")||"none"}`).join("\n");
+  try{await navigator.clipboard.writeText(txt);toast("Copied")}
+  catch(e){showNote(txt)}
+};
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
+  filter=b.dataset.f;
+  document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));
+  paint();
+});
+
+/* loupe */
+function openLoupe(i){loupeIdx=i;$("#loupe").hidden=false;paintLoupe();$("#close").focus()}
+function closeLoupe(){const n=FRAMES[loupeIdx]?.n;loupeIdx=-1;$("#loupe").hidden=true;n&&$("#frame-"+n+" .shot").focus()}
+function paintLoupe(){
+  const f=FRAMES[loupeIdx];
+  $("#loupe-img").src=src(f,"full");
+  $("#loupe-img").alt="Dead Aire at Bottle Hill, frame "+f.n;
+  $("#loupe-num").textContent=`▸ ${f.n}  ${loupeIdx+1}/${FRAMES.length}`;
+  const b=$("#loupe-bw");b.hidden=!f.bw;b.textContent=showBW[f.n]?"Color":"B&W";
+}
+$("#prev").onclick=()=>{loupeIdx=(loupeIdx+FRAMES.length-1)%FRAMES.length;paintLoupe()};
+$("#next").onclick=()=>{loupeIdx=(loupeIdx+1)%FRAMES.length;paintLoupe()};
+$("#close").onclick=closeLoupe;
+$("#loupe-bw").onclick=()=>{const f=FRAMES[loupeIdx];showBW[f.n]=!showBW[f.n];paint()};
+document.addEventListener("keydown",e=>{
+  if(loupeIdx<0)return;
+  if(e.key==="Escape")closeLoupe();
+  else if(e.key==="ArrowLeft")$("#prev").click();
+  else if(e.key==="ArrowRight")$("#next").click();
+  else if(["p","m","x"].includes(e.key.toLowerCase())){
+    setPick(FRAMES[loupeIdx].n,{p:"post",m:"maybe",x:"pass"}[e.key.toLowerCase()]);
+  }
+});
+
+/* comments */
+async function comment(){}
+
+build();paint();
+
+(()=>{
+  $("#me").textContent="Your picks save in this browser. When you're done, tap Copy my picks and text them to Chris.";
+})();
+</script>
+</body>
+</html>
