@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Julia Greenberg at Outpost</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=DM+Mono:wght@400;500&family=Permanent+Marker&display=swap">
+<style>
+/* Layout: a darkroom contact sheet. Frames sit on black film stock with
+   orange edge-print frame numbers. */
+:root{
+  --stock:#0d0c0b;
+  --rebate:#191715;
+  --edge:#e0913a;
+  --paper:#ece6da;
+  --muted:#8f877b;
+  --line:#2c2925;
+  --pencil:#e5483a;
+  --display:"Permanent Marker","Marker Felt","Comic Sans MS",cursive;
+  --ui:"Archivo Narrow","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--stock);color:var(--paper);font-family:var(--ui);font-size:16px;line-height:1.45;margin:0}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:32px 72px;display:grid;gap:28px}
+
+header{display:grid;gap:14px;border-bottom:1px solid var(--line);padding-bottom:22px}
+.slug{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--edge)}
+h1{font-weight:700;font-size:clamp(34px,6vw,60px);line-height:1;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-family:var(--display);font-style:normal;font-weight:400;color:var(--pencil);font-size:.62em;display:inline-block;transform:rotate(-4deg) translateY(-.2em);margin-left:.25em}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.lede strong{color:var(--paper);font-weight:600}
+
+.sheet{display:grid;gap:26px;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr))}
+.frame:not(.single){grid-column:1/-1}
+.frame{background:var(--rebate);padding:10px 10px 16px;display:grid;gap:10px;position:relative;min-width:0}
+.frame::before,.frame::after{content:"";position:absolute;left:10px;right:10px;height:5px;
+  background:repeating-linear-gradient(90deg,var(--stock) 0 9px,transparent 9px 18px)}
+.frame::before{top:2px}.frame::after{bottom:2px}
+.edge{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--edge);letter-spacing:.08em;padding-top:4px}
+.solo{color:var(--muted)}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:10px}
+.pair figure{margin:0;display:grid;gap:6px;min-width:0}
+.pair img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;background:#000}
+.pair figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.frame.single .pair{grid-template-columns:minmax(0,1fr)}
+
+footer{color:var(--muted);font-size:13px;font-family:var(--mono);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:14px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="slug">Proof sheet · Sun Oct 11 2026 · Outpost in the Burbs</div>
+    <h1>Julia Greenberg at Outpost <em>proofs</em></h1>
+    <p class="lede">Seven frames from Sunday's show. One has a black-and-white version, shown next to the color. Let me know if any of these shouldn't go up.</p>
+  </header>
+
+  <section class="sheet" id="sheet" aria-label="Contact sheet"></section>
+
+  <footer>Photos © Chris Flynn · Preview, not posted yet</footer>
+</div>
+
+<script>
+const FRAMES=[
+  {n:"8040",bw:true},{n:"8066",bw:false},{n:"8073",bw:false},
+  {n:"8079",bw:false},{n:"8081",bw:false},{n:"8162",bw:false},
+  {n:"8167",bw:false}
+];
+const sheet=document.getElementById("sheet");
+FRAMES.forEach(f=>{
+  const el=document.createElement("article");
+  el.className="frame"+(f.bw?"":" single");
+  const fig=(file,label)=>`<figure><img src="img/full/${file}.jpg" loading="lazy" alt="Julia Greenberg at Outpost, frame ${f.n}, ${label}"><figcaption>${label}</figcaption></figure>`;
+  el.innerHTML=`<div class="edge"><span>▸ ${f.n}</span>${f.bw?"":`<span class="solo">color only</span>`}</div>
+    <div class="pair">${fig(f.n,"Color")}${f.bw?fig("bw"+f.n,"B&amp;W"):""}</div>`;
+  sheet.appendChild(el);
+});
+</script>
+</body>
+</html>
