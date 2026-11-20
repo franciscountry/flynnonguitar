@@ -80,7 +80,7 @@ FRAMES.forEach(f=>{
   el.className="frame single";
   const label=f.bw?"B&amp;W":"Color";
   el.innerHTML=`<div class="edge"><span>▸ ${f.n}</span><span class="solo">${label}</span></div>
-    <div class="pair"><figure><img src="img/full/${f.n}.jpg" loading="lazy" alt="Ally Kenny in Garwood, frame ${f.n}, ${label}"></figure></div>`;
+    <div class="pair"><figure><img src="img/full/${f.n}.jpg?v=2" loading="lazy" alt="Ally Kenny in Garwood, frame ${f.n}, ${label}"></figure></div>`;
   sheet.appendChild(el);
 });
 </script>
